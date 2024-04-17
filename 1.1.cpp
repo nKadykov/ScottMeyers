@@ -31,7 +31,7 @@ int main() {
     int x = 27; // x - int
     const int cx = x; // cx - const int
     const int &rx = x; // rx - ссылка на x как на const int
-    const int *px = &x;
+    const int *px = &x; // px - указатель на x
 
     decltype(auto) f11 = f1(x); // x - int
     decltype(auto) f12 = f1(cx); // T - const int, param - const int&
@@ -52,6 +52,9 @@ int main() {
     decltype(auto) f51 = f5(x); // T, param - int
     decltype(auto) f52 = f5(cx); // T, param - int
     decltype(auto) f53 = f5(rx); // T, param - int
+
+    const char *const ptr = "Pointer";
+    decltype(auto) f33 = f3(ptr);
 
     return 0;
 }
