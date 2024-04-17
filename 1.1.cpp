@@ -1,6 +1,7 @@
 #include <iostream>
 #include <typeinfo>
 #include <string>
+#include <array>
 
 template<typename T>
 decltype(auto) f1(T &param) {
@@ -25,6 +26,11 @@ auto f4(T &&param) {
 template<typename T>
 decltype(auto) f5(T param) {
     return param; 
+}
+
+template<typename T, std::size_t N>
+constexpr std::size_t arraySize(T(&)[N]) noexcept {
+    return N;
 }
 
 int main() {
@@ -55,6 +61,15 @@ int main() {
 
     const char *const ptr = "Pointer";
     decltype(auto) f33 = f3(ptr);
+
+    const char name[] = "Briggs";
+    const char *ptrToName = name;
+    decltype(auto) f54 = f5(name); // name - массив, но Т - const char*
+    decltype(auto) f55 = f1(name); // T - const char[7], param - const char(&)[7]
+
+    int keyVals[] = {1, 3, 7, 9, 11, 22, 35};
+    int mappedVals[arraySize(keyVals)];
+    std::array<int, arraySize(keyVals)> mappedVals2;
 
     return 0;
 }
